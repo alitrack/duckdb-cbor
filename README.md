@@ -73,8 +73,10 @@ SELECT to_hex(cbor_from_json('[1,2,3]'));      -- 83010203
 SELECT to_hex(cbor_canonical(from_hex('a1616101'), 'core'));
 -- Cross-format: MessagePack → CBOR, then read back as JSON.
 SELECT cbor_to_json(msgpack_to_cbor(from_hex('93010203')));  -- [1,2,3]
--- COSE: the JWS/CWT/WebAuthn join key.
-SELECT cbor_cose_payload(cose_bytes), cbor_cose_x5t(cose_bytes);
+-- COSE: the JWS/CWT/WebAuthn join key. A minimal COSE_Encrypt0 carrying an
+-- x5t thumbprint (0001...13) and the payload b"hello":
+SELECT to_hex(cbor_cose_payload(from_hex('8340a11822820f54000102030405060708090a0b0c0d0e0f101112134568656c6c6f'))) AS payload;  -- 68656c6c6f
+SELECT cbor_cose_x5t(from_hex('8340a11822820f54000102030405060708090a0b0c0d0e0f101112134568656c6c6f'));                       -- 000102030405060708090a0b0c0d0e0f10111213
 ```
 
 ## Semantics
