@@ -12,6 +12,27 @@ C-API binding layer. The engine (`cbor_core/`) is a verbatim port of the
 cryptographic verification**; only the transport layer was replaced with direct
 C-API vector I/O.
 
+## Install
+
+Once accepted into [DuckDB's community extensions](https://github.com/duckdb/community-extensions):
+
+```sql
+INSTALL cbor FROM community;
+LOAD cbor;
+```
+
+Until it lands in the community registry, build from source:
+
+```bash
+git clone https://github.com/alitrack/duckdb-cbor && cd duckdb-cbor
+git submodule update --init --recursive
+make release          # -> build/release/cbor.duckdb_extension
+```
+
+```sql
+LOAD 'path/to/cbor.duckdb_extension';
+```
+
 ## Functions (v1)
 
 | Function | Signature | Returns |
